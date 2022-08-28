@@ -63,11 +63,131 @@
 }
 
 .todo {
+  height: 70px;
   margin: auto;
   width: 400px;
   display: flex;
-  padding: 10px;
+  border-radius: 2px;
   margin-block: 40px;
   flex-direction: row;
-  box-shadow: 2px 2px 5px 5px rgb(205, 205, 201);
+  align-items: center;
+  padding-inline: 5px;
+  box-shadow: 0 0 5px 5px rgb(205, 205, 201);
+}
+
+.toggled {
+  animation: spin 0.5s linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotateX(0deg) scale(1);
+  }
+  50% {
+    transform: rotateX(180deg) scale(1.5);
+  }
+  to {
+    transform: rotateX(360deg) scale(1);
+  }
+}
+
+.todoText {
+  flex: 1;
+  font-size: 20px;
+}
+
+.crossed {
+  text-decoration: line-through;
+}
+
+.iconBtn {
+  width: 40px;
+  height: 100%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  background-color: transparent;
+}
+
+.iconBtn::after {
+  left: 5%;
+  width: 0;
+  bottom: 0;
+  width: 90%;
+  content: "";
+  height: 3px;
+  position: absolute;
+  transform: scale(0);
+  transition-duration: 0.25s;
+}
+
+.iconBtn:hover {
+  opacity: 0.8;
+}
+
+.iconBtn:active {
+  opacity: 0.5;
+}
+
+.iconBtn:hover::after {
+  transform: scale(1);
+}
+
+.deleteBtn::after {
+  background-color: rgb(249, 65, 65);
+}
+
+.editBtn::after {
+  background-color: rgb(160, 160, 160);
+}
+
+.checkboxWrapper input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.checkboxWrapper {
+  width: 50px;
+  height: 100%;
+}
+
+.checkboxWrapper label {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkboxWrapper label::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  display: block;
+  border-radius: 4px;
+  border: 2px solid rgb(177, 172, 172);
+}
+
+.checkboxWrapper label:hover::after {
+  border-color: black;
+}
+
+.checkboxWrapper input:checked + label::after {
+  border-color: transparent;
+  background-color: rgb(83 207 102);
+}
+
+.checkboxWrapper input:checked + label::before {
+  left: 50%;
+  top: 47.5%;
+  content: "";
+  width: 12px;
+  height: 6px;
+  position: absolute;
+  border-radius: 1px;
+  border-left: 3.5px solid white;
+  border-bottom: 3.5px solid white;
+  transform: translate(-50%, -50%) rotate(-45deg);
 }

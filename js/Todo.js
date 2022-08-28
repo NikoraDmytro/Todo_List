@@ -1,11 +1,11 @@
 class Todo {
   text;
-  createdA;
+  createdAt;
   isCompleted;
 
   constructor(text) {
     this.text = text;
     this.isCompleted = false;
-    this.createdA = Date.now();
+    this.createdAt = Date.now();
   }
 }
