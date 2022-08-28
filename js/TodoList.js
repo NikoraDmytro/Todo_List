@@ -19,9 +19,11 @@ class TodoList {
       text.classList.add("crossed");
     }
 
-    todoElement.addEventListener("animationend", () =>
-      todoElement.classList.remove("toggled")
-    );
+    todoElement.addEventListener("animationend", () => {
+      todoElement.classList.remove("toggled");
+
+      todoElement.removeEventListener("animationend");
+    });
   }
 
   deleteTodo(todoElement) {
@@ -37,8 +39,15 @@ class TodoList {
   addTodo(todo) {
     const li = document.createElement("li");
 
-    li.className = "todo";
+    li.classList.add("todo", "popOut");
     li.dataset.createdAt = todo.createdAt;
+
+    li.addEventListener("animationend", () => {
+      li.classList.remove("popOut");
+
+      li.removeEventListener("animationend");
+    });
+
     li.innerHTML += `
       <div class="checkboxWrapper">
         <input 
@@ -50,7 +59,7 @@ class TodoList {
         <label for="completed-${todo.createdAt}"></label>
       </div>
 
-      <p class="todoText">${todo.text}</p>
+      <p class="todoText ${todo.isCompleted ? "crossed" : ""}">${todo.text}</p>
 
       <button class="iconBtn editBtn">
         <img src="../img/edit.png" alt="Edit" />
@@ -64,11 +73,8 @@ class TodoList {
   }
 
   displayTodos() {
-    const initialTodos = [
-      new Todo("Do the programing"),
-      new Todo("Study physics"),
-    ];
+    const todos = TodoStorage.getTodos();
 
-    initialTodos.forEach(this.addTodo);
+    todos.forEach((todo) => this.addTodo(todo));
   }
 }
