@@ -1,5 +1,16 @@
 class TodoStorage {
-  static getTodos() {
+  todos;
+
+  constructor() {
+    this.todos = this.#getTodos();
+
+    this.addTodo = this.addTodo.bind(this);
+    this.editTodo = this.editTodo.bind(this);
+    this.toggleTodo = this.toggleTodo.bind(this);
+    this.deleteTodo = this.deleteTodo.bind(this);
+  }
+
+  #getTodos() {
     const todos = window.localStorage.getItem("todos");
 
     if (!todos) {
@@ -9,29 +20,35 @@ class TodoStorage {
     return JSON.parse(todos);
   }
 
-  static toggleTodo(createdAt) {
-    let todos = TodoStorage.getTodos();
+  #save() {
+    window.localStorage.setItem("todos", JSON.stringify(this.todos));
+  }
 
-    const todoToToggle = todos.find((todo) => todo.createdAt == createdAt);
+  toggleTodo(createdAt) {
+    const todoToToggle = this.todos.find((todo) => todo.createdAt == createdAt);
 
     todoToToggle.isCompleted = !todoToToggle.isCompleted;
 
-    window.localStorage.setItem("todos", JSON.stringify(todos));
+    this.#save();
   }
 
-  static addTodo(todo) {
-    const todos = TodoStorage.getTodos();
+  addTodo(todo) {
+    this.todos.push(todo);
 
-    todos.push(todo);
-
-    window.localStorage.setItem("todos", JSON.stringify(todos));
+    this.#save();
   }
 
-  static deleteTodo(createdAt) {
-    let todos = TodoStorage.getTodos();
+  deleteTodo(createdAt) {
+    this.todos = this.todos.filter((todo) => todo.createdAt != createdAt);
 
-    todos = todos.filter((todo) => todo.createdAt != createdAt);
+    this.#save();
+  }
 
-    window.localStorage.setItem("todos", JSON.stringify(todos));
+  editTodo(text, createdAt) {
+    const todoToEdit = this.todos.find((todo) => todo.createdAt == createdAt);
+
+    todoToEdit.text = text;
+
+    this.#save();
   }
 }

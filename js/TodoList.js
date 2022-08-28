@@ -5,7 +5,8 @@ class TodoList {
     this.#list = document.querySelector("#todoList");
 
     this.addTodo = this.addTodo.bind(this);
-    this.displayTodos = this.displayTodos.bind(this);
+    this.deleteTodo = this.deleteTodo.bind(this);
+    this.toggleTodo = this.toggleTodo.bind(this);
   }
 
   toggleTodo(todoElement) {
@@ -21,8 +22,6 @@ class TodoList {
 
     todoElement.addEventListener("animationend", () => {
       todoElement.classList.remove("toggled");
-
-      todoElement.removeEventListener("animationend");
     });
   }
 
@@ -36,6 +35,14 @@ class TodoList {
     });
   }
 
+  editTodo(text, createdAt) {
+    const todoText = this.#list.querySelector(
+      `[data-created-at="${createdAt}"] > .todoText`
+    );
+
+    todoText.textContent = text;
+  }
+
   addTodo(todo) {
     const li = document.createElement("li");
 
@@ -44,8 +51,6 @@ class TodoList {
 
     li.addEventListener("animationend", () => {
       li.classList.remove("popOut");
-
-      li.removeEventListener("animationend");
     });
 
     li.innerHTML += `
@@ -70,11 +75,5 @@ class TodoList {
     `;
 
     this.#list.append(li);
-  }
-
-  displayTodos() {
-    const todos = TodoStorage.getTodos();
-
-    todos.forEach((todo) => this.addTodo(todo));
   }
 }

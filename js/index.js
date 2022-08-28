@@ -1,42 +1,13 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const todoList = new TodoList();
+class UI {
+  static Startup() {
+    const form = document.querySelector("#todoForm");
+    const todoList = document.querySelector("#todoList");
 
-  todoList.displayTodos();
+    const eventHandlers = new EventHandlers();
 
-  const form = document.querySelector("#todoForm");
+    form.addEventListener("submit", eventHandlers.todoFormSubmit);
+    todoList.addEventListener("click", eventHandlers.todoListClick);
+  }
+}
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const todoText = form.todo.value;
-
-    if (!todoText) return;
-
-    const todo = new Todo(todoText);
-
-    todoList.addTodo(todo);
-    TodoStorage.addTodo(todo);
-
-    form.todo.value = "";
-  });
-
-  document.querySelector("#todoList").addEventListener("click", (event) => {
-    const target = event.target;
-
-    //clicked checkbox
-    if (target.id.includes("completed")) {
-      const todoElement = target.parentElement.parentElement;
-      const createdAt = todoElement.dataset.createdAt;
-
-      TodoStorage.toggleTodo(createdAt);
-      todoList.toggleTodo(todoElement);
-    }
-    if (target.className.includes("deleteBtn")) {
-      const todoElement = target.parentElement;
-      const createdAt = todoElement.dataset.createdAt;
-
-      todoList.deleteTodo(todoElement);
-      TodoStorage.deleteTodo(createdAt);
-    }
-  });
-});
+document.addEventListener("DOMContentLoaded", UI.Startup);
