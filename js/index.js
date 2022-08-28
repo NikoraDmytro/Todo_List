@@ -11,8 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const todoElement = target.parentElement.parentElement;
 
       todoList.toggleTodo(todoElement);
+    }
+    if (target.className.includes("deleteBtn")) {
+      const todoElement = target.parentElement;
 
-      return;
+      todoList.deleteTodo(todoElement);
     }
   });
 });

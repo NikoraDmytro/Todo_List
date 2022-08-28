@@ -24,10 +24,21 @@ class TodoList {
     );
   }
 
+  deleteTodo(todoElement) {
+    todoElement.classList.add("deleted");
+
+    todoElement.addEventListener("transitionend", (e) => {
+      if (e.target !== todoElement) return;
+
+      todoElement.remove();
+    });
+  }
+
   addTodo(todo) {
     const li = document.createElement("li");
 
     li.className = "todo";
+    li.dataset.createdAt = todo.createdAt;
     li.innerHTML += `
       <div class="checkboxWrapper">
         <input 
