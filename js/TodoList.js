@@ -41,6 +41,8 @@ class TodoList {
     );
 
     todoText.textContent = text;
+
+    todoText.scrollIntoView();
   }
 
   addTodo(todo) {
