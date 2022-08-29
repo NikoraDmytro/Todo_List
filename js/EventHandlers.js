@@ -31,6 +31,8 @@ class EventHandlers {
       this.#storage.editTodo(todoText, editingTodo);
       this.#todoList.editTodo(todoText, editingTodo);
 
+      delete form.dataset.editing;
+
       const formBtn = form.querySelector(".submitBtn");
       formBtn.classList.remove("submitEditBtn");
       formBtn.textContent = "Add";
