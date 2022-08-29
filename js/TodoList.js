@@ -69,10 +69,10 @@ class TodoList {
       <p class="todoText ${todo.isCompleted ? "crossed" : ""}">${todo.text}</p>
 
       <button class="iconBtn editBtn">
-        <img src="../img/edit.png" alt="Edit" />
+        <img src="img/edit.png" alt="Edit" />
       </button>
       <button class="iconBtn deleteBtn">
-        <img src="../img/remove.png" alt="Remove" />
+        <img src="img/remove.png" alt="Remove" />
       </button>
     `;
 
